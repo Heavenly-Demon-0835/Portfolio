@@ -51,12 +51,12 @@ const NAV_LINKS = [
 ];
 
 const CERTIFICATIONS = [
-  { name: "AWS Cloud Essentials", url: "#" },
-  { name: "IBM Gen AI Essentials", url: "#" },
-  { name: "IBM ML with Python", url: "#" },
-  { name: "IBM DBs & SQL", url: "#" },
-  { name: "Migrating to AWS", url: "#" },
-  { name: "Proficiency in C++ - AICFPT", url: "#" },
+  { name: "AWS Cloud Essentials", url: "https://www.linkedin.com/in/jay-dave-08mar05/details/certifications/" },
+  { name: "IBM Gen AI Essentials", url: "https://www.linkedin.com/in/jay-dave-08mar05/details/certifications/" },
+  { name: "IBM ML with Python", url: "https://www.linkedin.com/in/jay-dave-08mar05/details/certifications/" },
+  { name: "IBM DBs & SQL", url: "https://www.linkedin.com/in/jay-dave-08mar05/details/certifications/" },
+  { name: "Migrating to AWS", url: "https://www.linkedin.com/in/jay-dave-08mar05/details/certifications/" },
+  { name: "Proficiency in C++ - AICFPT", url: "https://www.linkedin.com/in/jay-dave-08mar05/details/certifications/" },
 ];
 
 const SOCIAL_LINKS = {
