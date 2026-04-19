@@ -196,18 +196,20 @@ function Navbar() {
           JD<span className="text-blue-600">.</span>
         </a>
         <div className="flex items-center gap-1">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50/60 transition-all"
-            >
-              {link.label}
-            </a>
-          ))}
+          <div className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50/60 transition-all"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
           <a
             href="#contact"
-            className="ml-2 px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all"
+            className="ml-2 px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all whitespace-nowrap"
           >
             Hire Me
           </a>
@@ -255,7 +257,7 @@ function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6"
         >
           Data Scientist &{" "}
           <span className="gradient-text">Backend Engineer.</span>
@@ -266,7 +268,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           I specialize in building automation tools, resilient data pipelines,
           and robust backend architectures utilizing{" "}
@@ -283,11 +285,11 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.8 }}
-          className="flex flex-wrap items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md sm:max-w-none mx-auto"
         >
           <a
             href="#projects"
-            className="group inline-flex items-center gap-2.5 px-8 py-3.5 text-white font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all leading-none"
+            className="group flex w-full sm:w-auto items-center justify-center gap-2.5 px-8 py-3.5 text-white font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all leading-none"
           >
             <span>View My Work</span>
             <ArrowDown className="w-4 h-4 shrink-0 group-hover:translate-y-0.5 transition-transform" />
@@ -297,13 +299,13 @@ function Hero() {
             href="/Jay_Dave_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2.5 px-8 py-3.5 text-slate-700 bg-white font-semibold rounded-xl shadow-md border border-slate-100 hover:border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition-all leading-none"
+            className="group flex w-full sm:w-auto items-center justify-center gap-2.5 px-8 py-3.5 text-slate-700 bg-white font-semibold rounded-xl shadow-md border border-slate-100 hover:border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition-all leading-none"
           >
             <span>Resume</span>
             <FileText className="w-4 h-4 shrink-0 text-slate-500 group-hover:text-blue-600 transition-colors" />
           </a>
 
-          <span className="inline-flex items-center gap-2.5 px-5 py-3.5 bg-slate-50 rounded-xl shadow-sm border border-slate-100 text-sm font-semibold text-slate-700 leading-none">
+          <span className="flex w-full sm:w-auto items-center justify-center gap-2.5 px-5 py-3.5 bg-slate-50 rounded-xl shadow-sm border border-slate-100 text-sm font-semibold text-slate-700 leading-none">
             <Shield className="w-4 h-4 shrink-0 text-indigo-600" />
             <span>Multi-Certified: AWS & IBM</span>
           </span>
@@ -573,12 +575,12 @@ function ProjectsSection() {
 
         {/* Filter Tabs */}
         <ScrollReveal delay={0.1}>
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
             {PROJECT_CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
-                className={`px-5 py-2.5 text-sm font-semibold rounded-xl transition-all duration-300 cursor-pointer ${
+                className={`px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-300 cursor-pointer ${
                   activeFilter === cat
                     ? "tab-active"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"
@@ -663,23 +665,23 @@ function ContactSection() {
 
         {/* Social Cards */}
         <ScrollReveal delay={0.2}>
-          <div className="flex justify-center gap-5">
+          <div className="flex justify-center gap-4 sm:gap-5">
             <a
               href={SOCIAL_LINKS.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="card-hover social-card-github w-36 h-36 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all duration-300"
+              className="card-hover social-card-github w-32 h-32 sm:w-36 sm:h-36 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all duration-300"
             >
-              <GithubIcon className="w-8 h-8" />
+              <GithubIcon className="w-7 h-7 sm:w-8 sm:h-8" />
               <span className="text-sm font-bold">GitHub</span>
             </a>
             <a
               href={SOCIAL_LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="card-hover social-card-linkedin w-36 h-36 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all duration-300"
+              className="card-hover social-card-linkedin w-32 h-32 sm:w-36 sm:h-36 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all duration-300"
             >
-              <LinkedinIcon className="w-8 h-8" />
+              <LinkedinIcon className="w-7 h-7 sm:w-8 sm:h-8" />
               <span className="text-sm font-bold">LinkedIn</span>
             </a>
           </div>
