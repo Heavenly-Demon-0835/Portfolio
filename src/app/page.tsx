@@ -60,8 +60,8 @@ const CERTIFICATIONS = [
 ];
 
 const SOCIAL_LINKS = {
-  github: "#",
-  linkedin: "#",
+  github: "https://github.com/Heavenly-Demon-0835",
+  linkedin: "https://www.linkedin.com/in/jay-dave-08mar05/",
 };
 
 type ProjectCategory =
