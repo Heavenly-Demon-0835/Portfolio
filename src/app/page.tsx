@@ -307,7 +307,7 @@ function Hero() {
 
           <span className="flex w-full sm:w-auto items-center justify-center gap-2.5 px-5 py-3.5 bg-slate-50 rounded-xl shadow-sm border border-slate-100 text-sm font-semibold text-slate-700 leading-none">
             <Shield className="w-4 h-4 shrink-0 text-indigo-600" />
-            <span>Multi-Certified: AWS & IBM</span>
+            <span>Multi-Certified: AWS, IBM & AICPT</span>
           </span>
         </motion.div>
       </div>
