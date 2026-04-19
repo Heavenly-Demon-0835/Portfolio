@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jay Dave — Portfolio
 
-## Getting Started
+A personal portfolio built specifically for **Jay Dave**, showcasing experience as a **Data Scientist & Backend Engineer** specializing in automation tools, resilient data pipelines, and robust backend architectures. 
 
-First, run the development server:
+**Live Demo:** [jay-dave-portfolio.vercel.app](https://jay-dave-portfolio.vercel.app) *(or your configured Vercel URL)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Tech Stack
+- **Framework:** Next.js 16 (App Router)
+- **Styling:** Tailwind CSS v4
+- **Animations:** Framer Motion
+- **Icons:** lucide-react + custom bare SVG brand icons
+- **Deployment:** Vercel
+
+## 🎨 Design Rules & UI Elements
+This portfolio employs premium, clean, modern aesthetics fitting for a professional data engineer:
+- **Color Palette:** Professional light theme utilizing slate grays and striking `blue-600` / `indigo-600` gradients.
+- **Glassmorphism:** A dynamic top sticky navbar adopting a frosted glass aesthetic on scroll.
+- **Layout (Bento Grid):** An asymmetric "Bento Grid" card layout applied to the Expertise section for modern visualization.
+- **Animations:** Smooth Framer Motion "Scroll Reveal" logic sliding elements up fluidly as they enter the viewport.
+- **Filtering:** Instant visual layout transitioning built-in for querying backend vs data science projects.
+
+## 📥 Setup & Local Development
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+3. **Open the browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📁 Repository Structure
+```text
+src/
+├── app/
+│   ├── globals.css    # Custom variables, glassmorphism logic, and keyframes
+│   ├── layout.tsx     # Next.js root layout, SEO tags, Inter font binding
+│   └── page.tsx       # Main Single-Page Application logic & Framer animations
+public/
+└── Jay_Dave_Resume.pdf # Downloadable resume linked in Hero section
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
