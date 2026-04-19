@@ -277,7 +277,7 @@ function Hero() {
           <span className="font-semibold text-slate-800">
             Machine Learning
           </span>
-          . Backed by a B.Sc. in IT and multi-cloud certifications.
+          . Backed by a B.Sc. in IT and multiple certifications from AWS, IBM & AICPT.
         </motion.p>
 
         {/* CTA Row */}
