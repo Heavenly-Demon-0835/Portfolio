@@ -86,6 +86,8 @@ interface Project {
   description: string;
   impact: string;
   icon: React.ReactNode;
+  url?: string;
+  warning?: string;
 }
 
 const PROJECTS: Project[] = [
@@ -98,6 +100,7 @@ const PROJECTS: Project[] = [
     impact:
       "Enables users to log nutrition and workouts offline, with automatic cloud sync — reducing data-entry friction by 60% compared to manual spreadsheet tracking.",
     icon: <BarChart3 className="w-5 h-5" />,
+    url: "https://metric-sepia.vercel.app/",
   },
   {
     title: "Linkfluence",
@@ -108,6 +111,9 @@ const PROJECTS: Project[] = [
     impact:
       "Consolidates multi-platform social analytics into a single dashboard, saving marketing teams 5+ hours per week of manual report compilation.",
     icon: <Globe className="w-5 h-5" />,
+    url: "https://link-fluence.vercel.app/",
+    warning:
+      "This app's backend is hosted on a free server. If you plan to log in and use it, please allow up to 60-75 seconds for the backend to spin up on first request.",
   },
   {
     title: "YouTube URL Fetcher",
@@ -296,7 +302,7 @@ function Hero() {
           </a>
 
           <a
-            href="/Jay_Dave_Resume.pdf"
+            href="/Jay Dave-1.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex w-full sm:w-auto items-center justify-center gap-2.5 px-8 py-3.5 text-slate-700 bg-white font-semibold rounded-xl shadow-md border border-slate-100 hover:border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition-all leading-none"
@@ -485,9 +491,103 @@ function ExpertiseSection() {
   );
 }
 
+/* ─────────────────────── WARNING MODAL ─────────────────────── */
+
+function LinkfluenceWarningModal({
+  open,
+  onClose,
+  url,
+  message,
+}: {
+  open: boolean;
+  onClose: () => void;
+  url: string;
+  message: string;
+}) {
+  if (!open) return null;
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm px-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full p-7"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Icon */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center">
+                <svg className="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">Heads Up!</h3>
+                <p className="text-xs text-slate-500">Free-tier hosting notice</p>
+              </div>
+            </div>
+
+            <p className="text-sm text-slate-600 leading-relaxed mb-6">
+              {message}
+            </p>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={onClose}
+                className="flex-1 px-4 py-2.5 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all"
+              >
+                Continue
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 /* ─────────────────────── PROJECTS ─────────────────────── */
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  onWarningClick,
+}: {
+  project: Project;
+  index: number;
+  onWarningClick?: (url: string, warning: string) => void;
+}) {
+  const handleClick = () => {
+    if (!project.url) return;
+    if (project.warning && onWarningClick) {
+      onWarningClick(project.url, project.warning);
+    } else {
+      window.open(project.url, "_blank", "noopener,noreferrer");
+    }
+  };
+
   return (
     <motion.div
       layout
@@ -495,7 +595,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.35, delay: index * 0.05 }}
-      className="card-hover bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col"
+      className={`card-hover bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col ${
+        project.url ? "cursor-pointer" : ""
+      }`}
+      onClick={handleClick}
     >
       <div className="p-7 flex-1 flex flex-col">
         {/* Header */}
@@ -513,7 +616,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               </p>
             </div>
           </div>
-          <ExternalLink className="w-4 h-4 text-slate-400 shrink-0 mt-1" />
+          <ExternalLink className={`w-4 h-4 shrink-0 mt-1 ${
+            project.url ? "text-blue-500" : "text-slate-400"
+          }`} />
         </div>
 
         {/* Description */}
@@ -532,6 +637,17 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </span>
           ))}
         </div>
+
+        {/* Live Demo badge */}
+        {project.url && (
+          <div className="flex items-center gap-1.5 mb-4">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="text-xs font-semibold text-emerald-600">Live Demo</span>
+          </div>
+        )}
 
         {/* Business Impact Box */}
         <div className="impact-box rounded-xl p-4">
@@ -552,59 +668,81 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState<ProjectCategory>("All");
+  const [warningModal, setWarningModal] = useState<{
+    open: boolean;
+    url: string;
+    message: string;
+  }>({ open: false, url: "", message: "" });
 
   const filtered =
     activeFilter === "All"
       ? PROJECTS
       : PROJECTS.filter((p) => p.category === activeFilter);
 
+  const handleWarningClick = (url: string, warning: string) => {
+    setWarningModal({ open: true, url, message: warning });
+  };
+
   return (
-    <section id="projects" className="py-24 px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full mb-4 uppercase tracking-wider">
-              <Braces className="w-3.5 h-3.5" />
-              Engineering Output
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-              Featured Projects
-            </h2>
-          </div>
-        </ScrollReveal>
+    <>
+      <LinkfluenceWarningModal
+        open={warningModal.open}
+        url={warningModal.url}
+        message={warningModal.message}
+        onClose={() => setWarningModal({ open: false, url: "", message: "" })}
+      />
+      <section id="projects" className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full mb-4 uppercase tracking-wider">
+                <Braces className="w-3.5 h-3.5" />
+                Engineering Output
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Featured Projects
+              </h2>
+            </div>
+          </ScrollReveal>
 
-        {/* Filter Tabs */}
-        <ScrollReveal delay={0.1}>
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
-            {PROJECT_CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveFilter(cat)}
-                className={`px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-300 cursor-pointer ${
-                  activeFilter === cat
-                    ? "tab-active"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </ScrollReveal>
+          {/* Filter Tabs */}
+          <ScrollReveal delay={0.1}>
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
+              {PROJECT_CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveFilter(cat)}
+                  className={`px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-300 cursor-pointer ${
+                    activeFilter === cat
+                      ? "tab-active"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </ScrollReveal>
 
-        {/* Project Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </section>
+          {/* Project Grid */}
+          <motion.div
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <AnimatePresence mode="popLayout">
+              {filtered.map((project, i) => (
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  index={i}
+                  onWarningClick={handleWarningClick}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+      </section>
+    </>
   );
 }
 
