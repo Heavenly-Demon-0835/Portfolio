@@ -9,13 +9,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Jay Dave — Data Scientist & Backend Engineer",
+  title: "Jay Dave —Backend Developer",
   description:
-    "Portfolio of Jay Dave, a Data Scientist & Backend Engineer specializing in automation tools, resilient data pipelines, and robust backend architectures using Python, SQL, and Machine Learning.",
+    "Portfolio of Jay Dave, Backend Developer specializing in backend architectures using Python, SQL, and Machine Learning.",
   keywords: [
     "Jay Dave",
-    "Data Scientist",
-    "Backend Engineer",
+    "Backend Developer",
     "Python",
     "FastAPI",
     "Machine Learning",
@@ -23,7 +22,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Jay Dave" }],
   openGraph: {
-    title: "Jay Dave — Data Scientist & Backend Engineer",
+    title: "Jay Dave — Backend Developer",
     description:
       "Building automation tools, resilient data pipelines, and robust backend architectures.",
     type: "website",

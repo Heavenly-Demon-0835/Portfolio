@@ -68,14 +68,12 @@ type ProjectCategory =
   | "All"
   | "Backend & APIs"
   | "Automation"
-  | "Data Science"
   | "Data & Scraping";
 
 const PROJECT_CATEGORIES: ProjectCategory[] = [
   "All",
   "Backend & APIs",
   "Automation",
-  "Data Science",
   "Data & Scraping",
 ];
 
@@ -137,7 +135,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: "IBM Stock Dashboard",
-    category: "Data Science",
+    category: "Data & Scraping",
     tags: ["Python", "Plotly", "yfinance"],
     description:
       "An interactive financial dashboard visualizing IBM stock performance with Plotly charts. Pulls real-time data via yfinance and displays trend analysis, volume, and moving averages.",
@@ -265,7 +263,6 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6"
         >
-          Data Scientist &{" "}
           <span className="gradient-text">Backend Engineer.</span>
         </motion.h1>
 
