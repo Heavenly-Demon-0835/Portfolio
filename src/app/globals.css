@@ -119,3 +119,9 @@ html {
   color: white;
   border-color: #3b82f6;
 }
+
+/* Hero dot-grid background */
+.hero-grid {
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-size: 28px 28px;
+}

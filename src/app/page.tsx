@@ -82,10 +82,12 @@ interface Project {
   category: ProjectCategory;
   tags: string[];
   description: string;
+  techDecision: string;
   impact: string;
   icon: React.ReactNode;
   url?: string;
   warning?: string;
+  screenshot?: string;
 }
 
 const PROJECTS: Project[] = [
@@ -95,8 +97,10 @@ const PROJECTS: Project[] = [
     tags: ["FastAPI", "MongoDB", "Next.js"],
     description:
       "A full-stack fitness tracking platform with a FastAPI backend, MongoDB persistence, and a Next.js dashboard. Features offline-first sync, reactive data flows, and modular architecture.",
+    techDecision:
+      "FastAPI over Django REST for its async-first design and automatic OpenAPI docs; MongoDB over PostgreSQL because workout log entries are schema-flexible and write-heavy.",
     impact:
-      "Enables users to log nutrition and workouts offline, with automatic cloud sync — reducing data-entry friction by 60% compared to manual spreadsheet tracking.",
+      "Offline writes are queued in IndexedDB and replayed against the FastAPI sync endpoint on reconnect, ensuring zero data loss across sessions without requiring a persistent WebSocket connection.",
     icon: <BarChart3 className="w-5 h-5" />,
     url: "https://metric-sepia.vercel.app/",
   },
@@ -106,12 +110,14 @@ const PROJECTS: Project[] = [
     tags: ["Flask", "MongoDB", "React"],
     description:
       "A social media analytics backend built with Flask and MongoDB. Aggregates engagement metrics across platforms with a React-based visualization dashboard.",
+    techDecision:
+      "Flask chosen for its lightweight footprint on a read-heavy aggregation service; MongoDB's document model maps cleanly to heterogeneous per-platform metric shapes.",
     impact:
-      "Consolidates multi-platform social analytics into a single dashboard, saving marketing teams 5+ hours per week of manual report compilation.",
+      "Aggregation pipelines run server-side in MongoDB, pushing grouping and filtering to the database layer rather than loading raw records into Python — keeping API response times flat as data volume grows.",
     icon: <Globe className="w-5 h-5" />,
     url: "https://link-fluence.vercel.app/",
     warning:
-      "This app's backend is hosted on a free server. If you plan to log in and use it, please allow up to 60-75 seconds for the backend to spin up on first request.",
+      "Runs on a free-tier server — cold starts can take up to 60 s. Click to proceed anyway.",
   },
   {
     title: "YouTube URL Fetcher",
@@ -119,6 +125,8 @@ const PROJECTS: Project[] = [
     tags: ["Python", "Flask", "pandas"],
     description:
       "An automation tool that programmatically extracts and organizes YouTube video URLs by channel or playlist. Exports structured data via a Flask web interface.",
+    techDecision:
+      "pandas for in-memory tabular transforms before export — avoids spinning up a database for a single-session batch job; Flask keeps the UI surface minimal and stateless.",
     impact:
       "Automates a tedious manual workflow for content researchers, reducing data collection time from hours to seconds for bulk video analysis.",
     icon: <Bot className="w-5 h-5" />,
@@ -129,6 +137,8 @@ const PROJECTS: Project[] = [
     tags: ["Flask", "Selenium", "Python"],
     description:
       "A browser-automation-powered image scraper with a Flask frontend. Uses Selenium to navigate, extract, and download images from target websites at scale.",
+    techDecision:
+      "Selenium over requests + BeautifulSoup because target sites render images via JavaScript; full browser automation was the only reliable path to the rendered DOM.",
     impact:
       "Provides researchers and designers a no-code interface for bulk image collection, eliminating the need for manual downloads from hundreds of pages.",
     icon: <Zap className="w-5 h-5" />,
@@ -139,6 +149,8 @@ const PROJECTS: Project[] = [
     tags: ["Python", "Plotly", "yfinance"],
     description:
       "An interactive financial dashboard visualizing IBM stock performance with Plotly charts. Pulls real-time data via yfinance and displays trend analysis, volume, and moving averages.",
+    techDecision:
+      "Plotly over Matplotlib for its built-in interactivity (hover, zoom, range-select) without a JavaScript layer; yfinance gives a zero-cost, well-documented feed for OHLCV data.",
     impact:
       "Delivers actionable stock insights through interactive visualizations, enabling faster investment decisions without expensive financial terminal subscriptions.",
     icon: <TrendingUp className="w-5 h-5" />,
@@ -229,15 +241,8 @@ function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="hero-grid relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Subtle gradient orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 -left-32 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-32 w-96 h-96 bg-indigo-200/30 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-100/20 rounded-full blur-3xl" />
-      </div>
-
       <div className="relative max-w-4xl mx-auto px-6 text-center pt-20">
         {/* Pulsing location badge */}
         <motion.div
@@ -247,12 +252,7 @@ function Hero() {
           className="inline-flex items-center gap-2 mb-8"
         >
           <span className="relative flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-md border border-slate-100 text-sm font-medium text-slate-700">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600" />
-            </span>
-            <MapPin className="w-3.5 h-3.5 text-blue-600" />
-            Based in Mumbai, MH
+            🟢 Available for full-time · Mumbai, MH
           </span>
         </motion.div>
 
@@ -263,7 +263,8 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6"
         >
-          <span className="gradient-text">Backend Engineer.</span>
+          I build systems{" "}
+          <span className="gradient-text">that don't break.</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -273,14 +274,13 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.6 }}
           className="text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          I specialize in building automation tools, resilient data pipelines,
-          and robust backend architectures utilizing{" "}
-          <span className="font-semibold text-slate-800">Python</span>,{" "}
-          <span className="font-semibold text-slate-800">SQL</span>, and{" "}
-          <span className="font-semibold text-slate-800">
-            Machine Learning
-          </span>
-          . Backed by a B.Sc. in IT and multiple certifications from AWS, IBM & AICPT.
+          I design APIs that handle failure gracefully, pipelines that recover without babysitting,
+          and data models that stay consistent under load. My stack choices are driven by
+          trade-offs —{" "}
+          <span className="font-semibold text-slate-800">latency vs. throughput</span>,{" "}
+          <span className="font-semibold text-slate-800">consistency vs. availability</span>, and{" "}
+          <span className="font-semibold text-slate-800">build vs. buy</span>
+          . B.Sc. IT · AWS · IBM certified.
         </motion.p>
 
         {/* CTA Row */}
@@ -619,8 +619,14 @@ function ProjectCard({
         </div>
 
         {/* Description */}
-        <p className="text-sm text-slate-600 leading-relaxed mb-5 flex-1">
+        <p className="text-sm text-slate-600 leading-relaxed mb-3 flex-1">
           {project.description}
+        </p>
+
+        {/* Tech decision */}
+        <p className="text-xs text-slate-500 leading-relaxed mb-5">
+          <span className="font-semibold not-italic text-slate-600">Why this stack: </span>
+          <em>{project.techDecision}</em>
         </p>
 
         {/* Tags */}
@@ -855,8 +861,8 @@ export default function Home() {
     <main className="flex-1">
       <Navbar />
       <Hero />
-      <ExpertiseSection />
       <ProjectsSection />
+      <ExpertiseSection />
       <ContactSection />
       <Footer />
     </main>

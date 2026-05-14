@@ -9,24 +9,40 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Jay Dave —Backend Developer",
+  title: "Jay Dave — Python Backend Engineer | FastAPI, MongoDB, Automation",
   description:
-    "Portfolio of Jay Dave, Backend Developer specializing in backend architectures using Python, SQL, and Machine Learning.",
+    "Python backend engineer based in Mumbai, MH. Specialising in FastAPI, MongoDB, and automation pipelines. Open to SDE / backend engineering roles. Available for full-time opportunities.",
   keywords: [
     "Jay Dave",
-    "Backend Developer",
-    "Python",
-    "FastAPI",
-    "Machine Learning",
-    "Mumbai",
+    "Python backend engineer Mumbai",
+    "FastAPI developer",
+    "SDE backend engineer",
+    "MongoDB developer",
+    "automation engineer",
+    "backend engineer India",
+    "open to work SDE",
+    "Python developer Mumbai",
+    "FastAPI MongoDB",
   ],
   authors: [{ name: "Jay Dave" }],
   openGraph: {
-    title: "Jay Dave — Backend Developer",
+    title: "Jay Dave — Python Backend Engineer | FastAPI, MongoDB, Automation",
     description:
-      "Building automation tools, resilient data pipelines, and robust backend architectures.",
+      "Python backend engineer based in Mumbai. FastAPI, MongoDB, automation pipelines. Open to full-time SDE roles.",
     type: "website",
   },
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jay Dave",
+  jobTitle: "Python Backend Engineer",
+  url: "https://jaydave.dev",
+  sameAs: [
+    "https://github.com/Heavenly-Demon-0835",
+    "https://www.linkedin.com/in/jay-dave-08mar05/",
+  ],
 };
 
 export default function RootLayout({
@@ -36,6 +52,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );
